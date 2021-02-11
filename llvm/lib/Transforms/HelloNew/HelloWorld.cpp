@@ -15,12 +15,16 @@ PreservedAnalyses HelloWorldPass::run(Function &F,
   llvm::errs() << "Visiting function " << F.getName() << "\n";
 
   for (llvm::BasicBlock &BB : F) {
-    llvm::errs() << "Visiting bb " << B.getName() << "\n";
+    llvm::errs() << "Visiting bb " << BB.getName() << "\n";
+    llvm::errs() << "Visiting bb value name " << BB.getValueName() << "\n";
     for (llvm::Instruction &II : BB) {
       llvm::errs() << "Visiting II " << II.getName() << "\n";
+      llvm::errs() << "Visiting II opscodename: " << II.getOpcodeName() << "\n";
+      llvm::errs() << "Visiting II valuename: " << II.getValueName() << "\n";
       llvm::Instruction *I = &II;
       if (llvm::CallInst *CI = llvm::dyn_cast<llvm::CallInst>(I)) {
         llvm::errs() << "Visiting CI " << CI->getName() << "\n";
+        llvm::errs() << "Visiting CI value name " << CI->getValueName() << "\n";
         if (llvm::DILocation *Loc = I->getDebugLoc()) {
           unsigned Line = Loc->getLine();
           llvm::StringRef File = Loc->getFilename();
